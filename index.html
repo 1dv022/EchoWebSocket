@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Tahoma, Geneva, sans-serif;
+      }
+      div {
+        display: inline;
+      }
+    </style>
+
+  </head>
+  <body>
+    <input type="text" id="message"><br />
+    <button>Send</button>
+    <ul id="list"></ul>
+    <script>
+      var btn = document.querySelector("button");
+      var input = document.querySelector("#message");
+      var list = document.querySelector("#list");
+      var ws = new WebSocket('ws://194.47.172.165:8080');
+      ws.onmessage = function (event) {
+          console.log(event.data);
+          var message = JSON.parse(event.data).data;
+          var li = document.createElement("li");
+          li.textContent = message;
+          list.appendChild(li);
+      };
+
+
+
+      btn.addEventListener("click", function() {
+        var message = input.value;
+        var obj = {
+          username: "John",
+          type: "message",
+          data: message,
+          key: "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"
+        }
+        console.log("Sending Value %o",obj);
+        ws.send(JSON.stringify(obj));
+      });
+    </script>
+
+  </body>
+</html>
