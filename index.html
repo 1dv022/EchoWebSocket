@@ -20,7 +20,8 @@
       var btn = document.querySelector("button");
       var input = document.querySelector("#message");
       var list = document.querySelector("#list");
-      var ws = new WebSocket('ws://localhost:8888/socket/');
+      var ws = new WebSocket('ws://vhost3.lnu.se:20080/socket');
+      //var ws = new WebSocket('ws://localhost:8080/socket');
       ws.onmessage = function (event) {
           console.log(event.data);
           var message = JSON.parse(event.data).data;
@@ -44,8 +45,10 @@
           key: "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"
         }
         console.log("Sending Value %o",obj);
-
+        for(var i = 0; i < 10; i += 1) {
           ws.send(JSON.stringify(obj));
+        }
+
 
 
       });
